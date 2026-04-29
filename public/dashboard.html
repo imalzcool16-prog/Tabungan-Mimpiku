@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Tabungan Mimpiku</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navbar-brand">
+        <img src="/logo.png" alt="Logo TM" class="logo" />
+        <span>Tabungan Mimpiku</span>
+      </div>
+
+      <div class="navbar-user">
+        <span class="navbar-username">
+          Halo, <span id="usernameDisplay">User</span>
+        </span>
+        <button class="btn btn-secondary btn-sm" onclick="logout()">
+          Keluar
+        </button>
+        <button id="toggleTheme" class="btn btn-sm">🌙</button>
+      </div>
+    </nav>
+    <div class="dashboard-container">
+      <div class="add-target-card">
+        <h2 class="add-target-title">Tambah Target Tabungan</h2>
+        <form
+          id="addTargetForm"
+          class="add-target-form"
+          enctype="multipart/form-data"
+        >
+          <div class="upload-area" id="uploadArea">
+            <input
+              type="file"
+              id="gambarInput"
+              name="gambar"
+              accept="image/*"
+              hidden
+            />
+            <img
+              src=""
+              alt="Preview"
+              class="upload-preview"
+              id="uploadPreview"
+            />
+            <button type="button" class="upload-remove" id="uploadRemove">
+              &times;
+            </button>
+            <div class="upload-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                ></path>
+              </svg>
+            </div>
+            <p class="upload-text">
+              <strong>Upload gambar barang impian</strong>
+              Klik atau drag & drop<br />gambar barang yang ingin dibeli
+            </p>
+          </div>
+
+          <!-- Form Inputs -->
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="namaBarang">Nama Barang</label>
+              <input
+                type="text"
+                id="namaBarang"
+                name="namaBarang"
+                class="form-input"
+                placeholder="Contoh: Laptop Gaming"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="target"
+                >Target Tabungan (Rp)</label
+              >
+              <input
+                type="text"
+                id="target"
+                name="target"
+                class="form-input"
+                placeholder="Contoh: 15,000,000"
+                autocomplete="off"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="tipe">Tipe Tabungan</label>
+              <select id="tipe" name="tipe" class="form-select" required>
+                <option value="">Pilih tipe</option>
+                <option value="Harian">Harian</option>
+                <option value="Mingguan">Mingguan</option>
+                <option value="Bulanan">Bulanan</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="perPeriode"
+                >Jumlah Tabungan per Periode (Rp)</label
+              >
+              <input
+                type="text"
+                id="perPeriode"
+                name="perPeriode"
+                class="form-input"
+                placeholder="Contoh: 50,000"
+                autocomplete="off"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary" id="submitBtn">
+                Tambahkan Target Tabungan
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="tabs-container">
+        <div class="tabs-header">
+          <button class="tab-btn active" data-tab="aktif">
+            Tabungan Berlangsung
+            <span class="tab-badge" id="badgeAktif">0</span>
+          </button>
+          <button class="tab-btn" data-tab="selesai">
+            Tabungan Tercapai
+            <span class="tab-badge" id="badgeSelesai">0</span>
+          </button>
+        </div>
+
+        <div class="tabs-content">
+          <div class="tab-panel active" id="tab-aktif">
+            <div class="targets-grid" id="targetsAktif"></div>
+          </div>
+
+          <div class="tab-panel" id="tab-selesai">
+            <div class="targets-grid" id="targetsSelesai"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <h3 class="modal-title">Tambah Tabungan</h3>
+        <p class="modal-text">
+          Masukkan jumlah tabungan yang ingin ditambahkan
+        </p>
+        <div class="form-group">
+          <input
+            type="text"
+            id="tambahanInput"
+            class="form-input"
+            placeholder="Jumlah tabungan (Rp)"
+            autocomplete="off"
+          />
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" onclick="closeModal()">
+            Batal
+          </button>
+          <button class="btn btn-primary" onclick="confirmTambahTabungan()">
+            Tambah
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="deleteModalOverlay">
+      <div class="modal">
+        <h3 class="modal-title">Hapus Target</h3>
+        <p class="modal-text">
+          Apakah Anda yakin ingin menghapus target ini? Tindakan ini tidak dapat
+          dibatalkan.
+        </p>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" onclick="closeDeleteModal()">
+            Batal
+          </button>
+          <button class="btn btn-danger" onclick="confirmDelete()">
+            Hapus
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/auth.js"></script>
+    <script src="/js/dashboard.js"></script>
+    <script>
+      if (!checkAuth()) {
+        window.location.href = "/login";
+      }
+
+      const user = getCurrentUser();
+      if (user) {
+        document.getElementById("usernameDisplay").textContent = user.username;
+      }
+    </script>
+  </body>
+</html>

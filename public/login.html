@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Masuk - Tabungan Mimpiku</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="auth-logo">
+          <h1>Tabungan Mimpiku</h1>
+          <p class="subtitle">Masuk</p>
+        </div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label class="form-label" for="username">Nama Pengguna</label>
+            <input
+              type="text"
+              id="username"
+              class="form-input"
+              placeholder="Masukkan nama pengguna"
+              autocomplete="username"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="password">Kata Sandi</label>
+            <input
+              type="password"
+              id="password"
+              class="form-input"
+              placeholder="Masukkan kata sandi"
+              autocomplete="current-password"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="loginBtn">
+            Masuk
+          </button>
+        </form>
+
+        <div class="auth-footer">
+          Belum punya akun? <a href="/register">Daftar disini</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="/js/auth.js"></script>
+    <script>
+      // Check if already logged in
+      const token = localStorage.getItem("token");
+      if (token) {
+        window.location.href = "/dashboard";
+      }
+
+      // Login Form Handler
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const username = document.getElementById("username").value.trim();
+          const password = document.getElementById("password").value;
+          const loginBtn = document.getElementById("loginBtn");
+
+          // Validation
+          if (!username || !password) {
+            showToast("error", "Username dan password wajib diisi");
+            return;
+          }
+
+          // Show loading
+          loginBtn.innerHTML = '<div class="spinner"></div>';
+          loginBtn.disabled = true;
+
+          try {
+            const response = await fetch("/api/auth/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ username, password }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+              // Save token and user data
+              localStorage.setItem("token", data.token);
+              localStorage.setItem("user", JSON.stringify(data.user));
+
+              showToast("success", "Login berhasil! Mengalihkan...");
+
+              setTimeout(() => {
+                window.location.href = "/dashboard";
+              }, 1000);
+            } else {
+              showToast("error", data.message || "Login gagal");
+              loginBtn.innerHTML = "Masuk";
+              loginBtn.disabled = false;
+            }
+          } catch (error) {
+            console.error("Login error:", error);
+            showToast("error", "Terjadi kesalahan. Silakan coba lagi.");
+            loginBtn.innerHTML = "Masuk";
+            loginBtn.disabled = false;
+          }
+        });
+    </script>
+  </body>
+</html>

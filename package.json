@@ -1,0 +1,29 @@
+{
+  "name": "tabungan-mimpiku",
+  "version": "1.0.0",
+  "description": "Aplikasi Tabungan Mimpiku - Fullstack dengan Node.js, Express, MongoDB",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "cd server && npm start",
+    "dev": "cd server && npm run dev",
+    "install:all": "cd server && npm install",
+    "build": "echo 'Build complete'",
+    "test": "echo 'No tests specified'"
+  },
+  "keywords": [
+    "tabungan",
+    "savings",
+    "nodejs",
+    "express",
+    "mongodb",
+    "fullstack"
+  ],
+  "author": "Tabungan Mimpiku",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "mongodb": "^7.2.0"
+  }
+}

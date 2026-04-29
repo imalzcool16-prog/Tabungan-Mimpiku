@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+server/node_modules/
+
+# Environment variables
+.env
+server/.env
+
+# Uploads (kecuali placeholder)
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# OS files
+.DS_Store
+Thumbs.db
