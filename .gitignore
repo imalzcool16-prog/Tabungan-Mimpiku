@@ -1,29 +1,54 @@
+# ========================
 # Dependencies
+# ========================
 node_modules/
-server/node_modules/
 
+# ========================
 # Environment variables
+# ========================
 .env
+.env.*
 server/.env
 
-# Uploads (kecuali placeholder)
-public/uploads/*
-!public/uploads/.gitkeep
+# ========================
+# Editor / IDE
+# ========================
+.vscode/
 
+# ========================
 # Logs
-logs
+# ========================
+logs/
 *.log
 npm-debug.log*
 
+# ========================
 # Runtime data
-pids
+# ========================
+pids/
 *.pid
 *.seed
 *.pid.lock
 
-# Coverage directory used by tools like istanbul
-coverage
+# ========================
+# Coverage
+# ========================
+coverage/
 
+# ========================
+# Build output
+# ========================
+dist/
+build/
+
+# ========================
+# Uploads (kecuali placeholder)
+# ========================
+public/uploads/*
+!public/uploads/.gitkeep
+
+# ========================
 # OS files
+# ========================
 .DS_Store
 Thumbs.db
