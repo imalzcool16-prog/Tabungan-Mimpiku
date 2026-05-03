@@ -14,6 +14,7 @@ Aplikasi web fullstack untuk membantu user membuat target tabungan untuk membeli
 ## Tech Stack
 
 ### Backend
+
 - Node.js
 - Express.js
 - MongoDB + Mongoose
@@ -22,6 +23,7 @@ Aplikasi web fullstack untuk membantu user membuat target tabungan untuk membeli
 - Multer (file upload)
 
 ### Frontend
+
 - HTML5
 - CSS3 (Pure CSS, no framework)
 - Vanilla JavaScript
@@ -30,23 +32,27 @@ Aplikasi web fullstack untuk membantu user membuat target tabungan untuk membeli
 ## Instalasi
 
 1. Clone repository
+
 ```bash
 git clone <repository-url>
 cd tabungan-mimpiku
 ```
 
 2. Install dependencies
+
 ```bash
 npm run install:all
 ```
 
 3. Konfigurasi environment variables
+
 ```bash
 cp server/.env.example server/.env
 # Edit server/.env sesuai konfigurasi Anda
 ```
 
 4. Jalankan aplikasi
+
 ```bash
 npm start
 ```
@@ -56,11 +62,13 @@ Aplikasi akan berjalan di `http://localhost:3000`
 ## API Endpoints
 
 ### Auth
+
 - `POST /api/auth/register` - Register user baru
 - `POST /api/auth/login` - Login user
 - `GET /api/auth/me` - Get current user (protected)
 
 ### Targets
+
 - `GET /api/targets` - Get all targets (protected)
 - `GET /api/targets/:id` - Get single target (protected)
 - `POST /api/targets` - Create new target (protected)
@@ -113,3 +121,6 @@ tabungan-mimpiku/
 ## Lisensi
 
 MIT License
+
+![Repo Size](https://img.shields.io/github/repo-size/imalzcool16-prog/Tabungan-Mimpiku)
+![Last Commit](https://img.shields.io/github/last-commit/imalzcool16-prog/Tabungan-Mimpiku)

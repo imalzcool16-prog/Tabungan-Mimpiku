@@ -14,8 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Static files untuk uploads dan public
-app.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
-app.use(express.static(path.join(__dirname, "../public")));
+app.use("/uploads", express.static(path.join(__dirname, "../client/uploads")));
+app.use(express.static(path.join(__dirname, "../client")));
 
 // JWT Secret
 const JWT_SECRET = process.env.JWT_SECRET || "tabungan_mimpiku_secret_key_2024";
@@ -268,7 +268,7 @@ const fs = require("fs");
 // Konfigurasi storage untuk multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "../public/uploads"));
+    cb(null, path.join(__dirname, "../client/uploads"));
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -556,7 +556,11 @@ app.delete("/api/targets/:id", authMiddleware, async (req, res) => {
       }
 
       if (target.gambar) {
-        const gambarPath = path.join(__dirname, "../public", target.gambar);
+        const gambarPath = path.join(
+          __dirname,
+          "../client/uploads",
+          target.gambar,
+        );
         if (fs.existsSync(gambarPath)) {
           fs.unlinkSync(gambarPath);
         }
@@ -576,7 +580,11 @@ app.delete("/api/targets/:id", authMiddleware, async (req, res) => {
 
       const target = memoryDB.targets[targetIndex];
       if (target.gambar) {
-        const gambarPath = path.join(__dirname, "../public", target.gambar);
+        const gambarPath = path.join(
+          __dirname,
+          "../client/uploads",
+          target.gambar,
+        );
         if (fs.existsSync(gambarPath)) {
           fs.unlinkSync(gambarPath);
         }
@@ -597,19 +605,19 @@ app.delete("/api/targets/:id", authMiddleware, async (req, res) => {
 // ============================================
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/login.html"));
+  res.sendFile(path.join(__dirname, "../client/login.html"));
 });
 
 app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/login.html"));
+  res.sendFile(path.join(__dirname, "../client/login.html"));
 });
 
 app.get("/register", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/register.html"));
+  res.sendFile(path.join(__dirname, "../client/register.html"));
 });
 
 app.get("/dashboard", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/dashboard.html"));
+  res.sendFile(path.join(__dirname, "../client/dashboard.html"));
 });
 
 // Error handling middleware
@@ -621,3 +629,23 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 3000;
+
+const clientPath = path.join(__dirname, "../client");
+
+app.use(express.static(clientPath));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(clientPath, "login.html"));
+});
+
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(clientPath, "login.html"));
+});
+
+app.get("/register", (req, res) => {
+  res.sendFile(path.join(clientPath, "register.html"));
+});
+
+app.get("/dashboard", (req, res) => {
+  res.sendFile(path.join(clientPath, "dashboard.html"));
+});
