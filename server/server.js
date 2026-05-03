@@ -31,12 +31,10 @@ const memoryDB = {
 // MongoDB Connection Status
 let useMongoDB = false;
 
-// MongoDB Connection
-const MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://localhost:27017/tabungan_mimpiku";
-
 mongoose
-  .connect(MONGODB_URI)
+  .connect(MONGODB_URI, {
+    serverSelectionTimeoutMS: 5000, // max 5 detik
+  })
   .then(() => {
     console.log("MongoDB Connected Successfully");
     useMongoDB = true;
