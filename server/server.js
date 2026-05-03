@@ -14,8 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Static files untuk uploads dan public
-app.use("/uploads", express.static(path.join(__dirname, "../client/uploads")));
-app.use(express.static(path.join(__dirname, "../client")));
+app.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
+app.use(express.static(path.join(__dirname, "../public")));
 
 // JWT Secret
 const JWT_SECRET = process.env.JWT_SECRET || "tabungan_mimpiku_secret_key_2024";
@@ -40,20 +40,10 @@ mongoose
   .then(() => {
     console.log("MongoDB Connected Successfully");
     useMongoDB = true;
-
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-      console.log(`Database mode: MongoDB`);
-    });
   })
   .catch((err) => {
     console.log("MongoDB not available, using in-memory database");
     console.log("Connection error:", err.message);
-
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-      console.log(`Database mode: In-Memory (Demo)`);
-    });
   });
 
 // Helper Functions untuk In-Memory DB
@@ -268,7 +258,7 @@ const fs = require("fs");
 // Konfigurasi storage untuk multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "../client/uploads"));
+    cb(null, path.join(__dirname, "../public/uploads"));
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -556,11 +546,7 @@ app.delete("/api/targets/:id", authMiddleware, async (req, res) => {
       }
 
       if (target.gambar) {
-        const gambarPath = path.join(
-          __dirname,
-          "../client/uploads",
-          target.gambar,
-        );
+        const gambarPath = path.join(__dirname, "../public", target.gambar);
         if (fs.existsSync(gambarPath)) {
           fs.unlinkSync(gambarPath);
         }
@@ -580,11 +566,7 @@ app.delete("/api/targets/:id", authMiddleware, async (req, res) => {
 
       const target = memoryDB.targets[targetIndex];
       if (target.gambar) {
-        const gambarPath = path.join(
-          __dirname,
-          "../client/uploads",
-          target.gambar,
-        );
+        const gambarPath = path.join(__dirname, "../public", target.gambar);
         if (fs.existsSync(gambarPath)) {
           fs.unlinkSync(gambarPath);
         }
@@ -605,19 +587,19 @@ app.delete("/api/targets/:id", authMiddleware, async (req, res) => {
 // ============================================
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/login.html"));
+  res.sendFile(path.join(__dirname, "../public/login.html"));
 });
 
 app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/login.html"));
+  res.sendFile(path.join(__dirname, "../public/login.html"));
 });
 
 app.get("/register", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/register.html"));
+  res.sendFile(path.join(__dirname, "../public/register.html"));
 });
 
 app.get("/dashboard", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/dashboard.html"));
+  res.sendFile(path.join(__dirname, "../public/dashboard.html"));
 });
 
 // Error handling middleware
@@ -628,24 +610,5 @@ app.use((err, req, res, next) => {
     .json({ message: "Something went wrong!", error: err.message });
 });
 
-const PORT = process.env.PORT || 3000;
-
-const clientPath = path.join(__dirname, "../client");
-
-app.use(express.static(clientPath));
-
-app.get("/", (req, res) => {
-  res.sendFile(path.join(clientPath, "login.html"));
-});
-
-app.get("/login", (req, res) => {
-  res.sendFile(path.join(clientPath, "login.html"));
-});
-
-app.get("/register", (req, res) => {
-  res.sendFile(path.join(clientPath, "register.html"));
-});
-
-app.get("/dashboard", (req, res) => {
-  res.sendFile(path.join(clientPath, "dashboard.html"));
-});
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log("Server jalan di " + PORT));
