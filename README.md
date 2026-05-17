@@ -55,9 +55,10 @@ cp server/.env.example server/.env
 
 ```bash
 npm start
+npm run dev
 ```
 
-Aplikasi akan berjalan di `http://localhost:3000`
+Aplikasi akan berjalan di `http://localhost:5000`
 
 ## API Endpoints
 
