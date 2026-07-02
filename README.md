@@ -34,7 +34,7 @@ Aplikasi web fullstack untuk membantu user membuat target tabungan untuk membeli
 1. Clone repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/imalzcool16-prog/Tabungan-Mimpiku
 cd tabungan-mimpiku
 ```
 

@@ -38,7 +38,7 @@ mongoose
     serverSelectionTimeoutMS: 5000, // max 5 detik
   })
   .then(() => {
-    console.log("MongoDB Connected Successfully");
+    console.log("AKHIRNYA JALAN JUGA ANJENG");
     useMongoDB = true;
   })
   .catch((err) => {
@@ -611,4 +611,4 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log("Server jalan di " + PORT));
+app.listen(PORT, () => console.log("SI ANJING BERHASIL JALAN DI PORT " + PORT));

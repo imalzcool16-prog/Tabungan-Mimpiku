@@ -1052,3 +1052,46 @@ body {
 .logo:hover {
   transform: scale(1.05);
 }
+
+/* hide scrollbar but allow scrolling */
+body {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* stronger rule to hide scrollbars on html/body and any scrollable elements */
+html,
+body,
+.dashboard-container,
+.targets-grid,
+.tabs-content {
+  overflow: auto; /* keep scrolling functionality */
+}
+
+/* fully hide scrollbars while preserving scroll on all browsers */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.dashboard-container::-webkit-scrollbar,
+.targets-grid::-webkit-scrollbar,
+.tabs-content::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+html,
+body {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}

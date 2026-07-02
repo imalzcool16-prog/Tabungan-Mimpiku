@@ -3,7 +3,9 @@
  * Tabungan Mimpiku
  */
 const duitSound = new Audio("/sounds/kaching.mp3");
-const sultanSound = new Audio("/sounds/sultan.mp3");
+const sultanSound = new Audio(
+  "/sounds/rich-millionaire-bomboclat-shortened.mp3",
+);
 // Global Variables
 let currentTargetId = null;
 let targetToDelete = null;
