@@ -20,7 +20,7 @@
   "author": "Tabungan Mimpiku",
   "license": "MIT",
   "engines": {
-    "node": ">=16.0.0"
+    "node": "20.x"
   },
   "dependencies": {
     "@capacitor/android": "^8.4.1",
