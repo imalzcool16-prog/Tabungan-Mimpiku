@@ -612,15 +612,3 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log("SI ANJING BERHASIL JALAN DI PORT " + PORT));
-
-console.log(process.version);
-
-const { username, password } = req.body;
-
-console.log("Username dari frontend:", username);
-
-const User = require("./models/User");
-
-const user = await User.findOne({ username });
-
-console.log("User ditemukan:", user);
