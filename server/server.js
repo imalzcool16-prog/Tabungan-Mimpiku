@@ -612,3 +612,5 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log("SI ANJING BERHASIL JALAN DI PORT " + PORT));
+
+console.log(process.version);
